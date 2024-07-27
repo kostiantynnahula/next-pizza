@@ -1,60 +1,31 @@
+"use client";
+
 import React from "react";
 import { Title } from "./title";
 import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
+import { useFilterIngredients } from "@/hooks/useFilterIngredients";
 
 type Props = {
   className?: string;
 };
 
-const ingridients = [
-  {
-    text: "Cheese souce",
-    value: "1",
-  },
-  {
-    text: "Mazzarella",
-    value: "2",
-  },
-  {
-    text: "Garlic",
-    value: "3",
-  },
-  {
-    text: "Pickling cucumber",
-    value: "4",
-  },
-  {
-    text: "Red onion",
-    value: "5",
-  },
-  {
-    text: "Tomatos",
-    value: "6",
-  },
-  {
-    text: "Pickling cucumber",
-    value: "4",
-  },
-  {
-    text: "Red onion",
-    value: "5",
-  },
-  {
-    text: "Tomatos",
-    value: "6",
-  },
-];
-
 export const Filters: React.FC<Props> = ({ className }) => {
+  const { ingredients, loading, selectedIds, onAddId } = useFilterIngredients();
+
+  const items = ingredients.map((item) => ({
+    value: String(item.id),
+    text: item.name,
+  }));
+
   return (
     <div className={className}>
       <Title text="Filters" size="sm" className="mb-5 font-bold" />
       <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Can group" value="1" />
-        <FilterCheckbox text="News" value="2" />
+        <FilterCheckbox name="group" text="Can group" value="1" />
+        <FilterCheckbox name="news" text="News" value="2" />
       </div>
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3">Price from and to:</p>
@@ -72,10 +43,14 @@ export const Filters: React.FC<Props> = ({ className }) => {
       </div>
       <CheckboxFiltersGroup
         title="Ingridients"
+        name="ingredients"
         className="mt-5"
         limit={6}
-        defaultItems={ingridients}
-        items={ingridients}
+        loading={loading}
+        defaultItems={items.slice(0, 6)}
+        items={items}
+        onClickCheckbox={onAddId}
+        selectedIds={selectedIds}
       />
     </div>
   );
