@@ -1,32 +1,60 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Title } from "./title";
-import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
-import { useFilterIngredients } from "@/hooks/useFilterIngredients";
+import { useRouter } from "next/navigation";
+import { useFilters, useQueryFilters, useIngredients } from "@/hooks";
+import qs from "qs";
 
 type Props = {
   className?: string;
 };
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading, selectedIds, onAddId } = useFilterIngredients();
+  const router = useRouter();
+  const { ingredients, loading } = useIngredients();
+  const filters = useFilters();
+  useQueryFilters(filters);
 
   const items = ingredients.map((item) => ({
     value: String(item.id),
     text: item.name,
   }));
 
+  const updatePrices = ([from, to]: number[]) => {
+    filters.setPrice("from", from);
+    filters.setPrice("to", to);
+  };
+
   return (
     <div className={className}>
       <Title text="Filters" size="sm" className="mb-5 font-bold" />
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox name="group" text="Can group" value="1" />
-        <FilterCheckbox name="news" text="News" value="2" />
-      </div>
+      <CheckboxFiltersGroup
+        name="types"
+        className="mt-5"
+        title="Types"
+        onClickCheckbox={filters.setTypes}
+        selected={filters.types}
+        items={[
+          { value: "1", text: "Thin" },
+          { value: "2", text: "Traditional" },
+        ]}
+      />
+      <CheckboxFiltersGroup
+        name="sizes"
+        className="mt-5"
+        title="Sizes"
+        onClickCheckbox={filters.setSizes}
+        selected={filters.sizes}
+        items={[
+          { value: "20", text: "20 sm" },
+          { value: "30", text: "30 sm" },
+          { value: "40", text: "40 sm" },
+        ]}
+      />
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3">Price from and to:</p>
         <div className="flex gap-3 mb-5">
@@ -34,12 +62,26 @@ export const Filters: React.FC<Props> = ({ className }) => {
             type="number"
             placeholder="0"
             min={0}
-            max={30000}
-            defaultValue={0}
+            max={1000}
+            value={filters.price.from}
+            onChange={(e) => filters.setPrice("from", Number(e.target.value))}
           />
-          <Input type="number" placeholder="30000" min={100} max={30000} />
+          <Input
+            type="number"
+            placeholder="1000"
+            min={100}
+            max={1000}
+            value={filters.price.to}
+            onChange={(e) => filters.setPrice("to", Number(e.target.value))}
+          />
         </div>
-        <RangeSlider min={0} max={5000} step={10} value={[0, 5000]} />
+        <RangeSlider
+          min={0}
+          max={1000}
+          step={10}
+          value={[filters.price.from || 0, filters.price.to || 1000]}
+          onValueChange={updatePrices}
+        />
       </div>
       <CheckboxFiltersGroup
         title="Ingridients"
@@ -49,8 +91,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
         loading={loading}
         defaultItems={items.slice(0, 6)}
         items={items}
-        onClickCheckbox={onAddId}
-        selectedIds={selectedIds}
+        onClickCheckbox={filters.setSelectedIngredients}
+        selected={filters.selectedIngredients}
       />
     </div>
   );
