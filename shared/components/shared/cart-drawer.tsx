@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
@@ -15,6 +14,8 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { CartDrawerItem } from "./cart-drawer-item";
 import { getCartItemDetails } from "@/shared/lib";
+import { useCartStore } from "@/shared/store";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 
 type Props = {
   children: React.ReactNode;
@@ -25,29 +26,67 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   className,
 }) => {
-  const totalAmount = 33.3;
+  const [
+    totalAmount,
+    items,
+    fetchCartItems,
+    updateItemQuantity,
+    removeCartItem,
+  ] = useCartStore((state) => [
+    state.totalAmount,
+    state.items,
+    state.fetchCartItems,
+    state.updateItemQuantity,
+    state.removeCartItem,
+  ]);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <SheetHeader>
           <SheetTitle>
-            In Cart <span className="font-bold">3 items</span>
+            In Cart <span className="font-bold">{items.length} items</span>
           </SheetTitle>
         </SheetHeader>
 
         <div className="-mx-6 mt-5 overflow-auto flex-1">
           <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl="https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-              name="Pizza"
-              price={11.1}
-              quantity={1}
-              details={getCartItemDetails(2, 30, [
-                { name: "Chicken", price: 1.1, id: 1 },
-              ])}
-            />
+            {items.map((item) => (
+              <CartDrawerItem
+                key={item.id}
+                id={item.id}
+                imageUrl={item.imageUrl}
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
+                details={
+                  item.ingredients &&
+                  getCartItemDetails(
+                    item.ingredients,
+                    item.pizzaType as PizzaType,
+                    item.pizzaSize as PizzaSize
+                  )
+                }
+                onClickCountButton={(type) =>
+                  onClickCountButton(item.id, item.quantity, type)
+                }
+                onClickRemoveButton={() => removeCartItem(item.id)}
+              />
+            ))}
           </div>
         </div>
 
