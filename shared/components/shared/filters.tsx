@@ -5,6 +5,7 @@ import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { useFilters, useQueryFilters, useIngredients } from "@/shared/hooks";
+import { Suspense } from "react";
 
 type Props = {
   className?: string;

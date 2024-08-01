@@ -32,21 +32,22 @@ export const ProductCard: React.FC<Props> = ({
             height={215}
           />
         </div>
-      </Link>
-      <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
-      <p className="text-sm text-gray-400">
-        Chicken, mozzarella, cheddar, pickles, tomatoes, cucumbers, red onions,
-      </p>
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-[20px]">
-          from <b>{price} $</b>
-        </span>
+        <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
+        <p className="text-sm text-gray-400">
+          Chicken, mozzarella, cheddar, pickles, tomatoes, cucumbers, red
+          onions,
+        </p>
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-[20px]">
+            from <b>{price} $</b>
+          </span>
 
-        <Button variant="secondary">
-          <Plus size={20} className="mr-1" />
-          Add
-        </Button>
-      </div>
+          <Button variant="secondary">
+            <Plus size={20} className="mr-1" />
+            Add
+          </Button>
+        </div>
+      </Link>
     </div>
   );
 };

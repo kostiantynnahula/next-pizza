@@ -32,6 +32,7 @@ export default async function ProductPage({
           />
           <p className="text-gray-400">Lorem ipsum dolor sit amet.</p>
           <GroupVariants
+            value="2"
             items={[
               { name: "Small", value: "1", disabled: false },
               { name: "Medium", value: "2", disabled: false },
