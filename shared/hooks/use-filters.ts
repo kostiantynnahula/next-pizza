@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSet } from "react-use";
 import { useSearchParams } from "next/navigation";
 
@@ -50,14 +50,16 @@ export const useFilters = (): ReturnProps => {
     setPrice((prev) => ({ ...prev, [name]: value }));
   };
 
-  return { 
-    sizes,
-    types, 
-    price,
-    selectedIngredients,
-    setPrice: updatePrice,
-    setSizes: toggleSizes,
-    setTypes: toggleTypes,
-    setSelectedIngredients: toggleIngredients
-  };
+  return useMemo(() => {
+    return {
+      sizes,
+      types,
+      price,
+      selectedIngredients,
+      setPrice: updatePrice,
+      setSizes: toggleSizes,
+      setTypes: toggleTypes,
+      setSelectedIngredients: toggleIngredients,
+    };
+  }, [sizes, types, price, selectedIngredients]);
 };
