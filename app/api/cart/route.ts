@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
         cartId: userCart.id,
         productItemId: data.productItemId,
         ingredients: {
-          every: {
+          some: {
             id: {
               in: data.ingredients,
             }
@@ -88,8 +88,6 @@ export async function POST(req: NextRequest) {
         },
       });
     }
-
-
 
     const updatedUserCart = await updateCartTotalAmount(token);
     const response = NextResponse.json(updatedUserCart);

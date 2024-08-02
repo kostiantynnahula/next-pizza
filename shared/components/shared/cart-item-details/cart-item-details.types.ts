@@ -4,6 +4,7 @@ export interface CartItemProps {
   details: string;
   name: string;
   price: number;
+  disabled?: boolean;
   quantity: number;
   className?: string;
 }
