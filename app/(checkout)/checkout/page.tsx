@@ -4,18 +4,19 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import {
   CheckoutAddressForm,
   CheckoutCart,
-  checkoutFormSchema,
   CheckoutPersonalForm,
   CheckoutSideBar,
   Container,
   Title,
-} from "@/shared/components/shared";
+} from "@/shared/components";
 import { useCart } from "@/shared/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckoutFormValues } from "@/shared/components/shared/checkout/checkout-form-schema";
+import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants";
+import { cn } from "@/shared/lib";
 
 export default function CheckoutPage() {
-  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
+  const { totalAmount, items, updateItemQuantity, removeCartItem, loading } =
+    useCart();
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -48,14 +49,19 @@ export default function CheckoutPage() {
                 items={items}
                 removeCartItem={removeCartItem}
                 updateItemQuantity={updateItemQuantity}
+                loading={loading}
               />
 
-              <CheckoutPersonalForm />
+              <CheckoutPersonalForm
+                className={cn({ "opacity-40 pointer-events-none": loading })}
+              />
 
-              <CheckoutAddressForm />
+              <CheckoutAddressForm
+                className={cn({ "opacity-40 pointer-events-none": loading })}
+              />
             </div>
             <div className="w-[450px]">
-              <CheckoutSideBar totalAmount={totalAmount} />
+              <CheckoutSideBar totalAmount={totalAmount} loading={loading} />
             </div>
           </div>
         </form>
