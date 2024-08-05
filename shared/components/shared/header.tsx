@@ -11,6 +11,8 @@ import { SearchInput } from "./search-input";
 import { CartButton } from "./cart-button";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { useSession, signIn } from "next-auth/react";
+import { ProfileButton } from "./profile-button";
 
 type Props = {
   hasCart?: boolean;
@@ -23,7 +25,10 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
+
+  console.log({ session });
 
   useEffect(() => {
     if (searchParams.has("paid")) {
@@ -53,10 +58,7 @@ export const Header: React.FC<Props> = ({
         )}
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-3">
-            <User size={16} />
-            Login
-          </Button>
+          <ProfileButton />
           {hasCart && (
             <div>
               <CartButton />
