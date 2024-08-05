@@ -6,4 +6,6 @@ export { getCartDetails } from './get-cart-details';
 export { calcCartItemTotalPrice } from './cart-calc-item-total-price';
 export { updateCartTotalAmount } from './update-cart-total-amount';
 export { findOrCreateCart } from './find-or-create-cart';
+export { sendEmail } from './send-email';
+export { createPayment } from './create-payment';
 export { cn } from './utils';
