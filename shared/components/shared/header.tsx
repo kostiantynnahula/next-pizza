@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/shared/lib/utils";
 import { Container } from "./container";
 import Image from "next/image";
-import { Button } from "../ui";
-import { User } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
 import { CartButton } from "./cart-button";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { ProfileButton } from "./profile-button";
+import { AuthModal } from "./modals";
 
 type Props = {
   hasCart?: boolean;
@@ -25,10 +24,10 @@ export const Header: React.FC<Props> = ({
   hasCart = true,
   className,
 }) => {
+  const [openAuthModal, setOpenAuthModal] = useState<boolean>(false);
+
   const { data: session } = useSession();
   const searchParams = useSearchParams();
-
-  console.log({ session });
 
   useEffect(() => {
     if (searchParams.has("paid")) {
@@ -58,7 +57,11 @@ export const Header: React.FC<Props> = ({
         )}
 
         <div className="flex items-center gap-3">
-          <ProfileButton />
+          <AuthModal
+            open={openAuthModal}
+            onClose={() => setOpenAuthModal(false)}
+          />
+          <ProfileButton onClicksignIn={() => setOpenAuthModal(true)} />
           {hasCart && (
             <div>
               <CartButton />
