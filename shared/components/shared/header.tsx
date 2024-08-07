@@ -26,7 +26,6 @@ export const Header: React.FC<Props> = ({
 }) => {
   const [openAuthModal, setOpenAuthModal] = useState<boolean>(false);
 
-  const { data: session } = useSession();
   const searchParams = useSearchParams();
 
   useEffect(() => {

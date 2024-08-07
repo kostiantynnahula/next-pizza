@@ -3,6 +3,7 @@ import {
   Container,
   Filters,
   ProductsGroupList,
+  Stories,
   Title,
   TopBar,
 } from "@/shared/components/shared";
@@ -25,6 +26,7 @@ export default async function Home({
         <Title text="All Pizzas" size="lg" className="font-extrabold" />
       </Container>
       <TopBar categories={categoryList} />
+      <Stories />
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           <div className="w-[250px]">
