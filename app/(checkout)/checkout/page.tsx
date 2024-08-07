@@ -15,7 +15,7 @@ import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants";
 import { cn } from "@/shared/lib";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Api } from "@/shared/services/api-client";
 
@@ -67,8 +67,7 @@ export default function CheckoutPage() {
       toast.success("Order created successfully");
 
       if (url) {
-        console.log({ url });
-        // location.href = url;
+        location.href = url;
       }
     } catch (e) {
       console.error(e);

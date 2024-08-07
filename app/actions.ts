@@ -8,7 +8,6 @@ import { getUserSession } from "@/shared/lib/get-user-session";
 import { OrderStatus, Prisma } from "@prisma/client";
 import { hashSync } from "bcrypt";
 import { cookies } from "next/headers";
-import { Resend } from "resend";
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -47,7 +46,7 @@ export async function createOrder(data: CheckoutFormValues) {
     if (cart?.totalAmount === 0) {
       throw new Error('Cart is empty');
     }
-
+    
     const order = await prisma.order.create({
       data: {
         fullName: data.firstName + " " + data.lastName,
@@ -63,7 +62,7 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
 
-    const updatedCart = await prisma.cart.update({
+    await prisma.cart.update({
       where: {
         id: cart.id,
       },
@@ -78,11 +77,7 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
 
-    const paymentData = await createPayment({
-      orderId: order.id,
-      amount: order.totalAmount,
-      description: `Payment for order #${order.id}`,
-    });
+    const paymentData = await createPayment(cart.items, order.id.toString());
 
     if (!paymentData) {
       throw new Error('Payment creation failed');
@@ -97,9 +92,8 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
   
-    const paymentUrl = paymentData.confirmation.confirmationUrl;
+    const paymentUrl = paymentData.url;
 
-    // TODO: Implement payment gateway (Stripe link)
     await sendEmail('kostyannagula@gmail.com', `Next pizza / pay the order #${order.id}`, PayOrderTemplate({
       orderId: order.id,
       totalAmount: order.totalAmount,
