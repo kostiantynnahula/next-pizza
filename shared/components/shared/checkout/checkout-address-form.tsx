@@ -1,3 +1,5 @@
+"use client";
+
 import { FormInput } from "@/shared/components/shared/form";
 import { FormTextarea } from "../form/form-textarea";
 import { WhiteBlock } from "../white-block";
