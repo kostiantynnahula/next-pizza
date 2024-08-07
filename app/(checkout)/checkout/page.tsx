@@ -15,7 +15,7 @@ import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants";
 import { cn } from "@/shared/lib";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Api } from "@/shared/services/api-client";
 
@@ -56,7 +56,7 @@ export default function CheckoutPage() {
     if (session) {
       fetchUserInfo();
     }
-  }, [session]);
+  }, [session, form]);
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = async (values) => {
     try {
