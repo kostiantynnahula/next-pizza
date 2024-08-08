@@ -11,7 +11,8 @@ import { cookies } from "next/headers";
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
-
+    const session = await getUserSession();
+    
     const cookieStore = cookies();
 
     const token = cookieStore.get('cartToken')?.value;
@@ -46,6 +47,8 @@ export async function createOrder(data: CheckoutFormValues) {
     if (cart?.totalAmount === 0) {
       throw new Error('Cart is empty');
     }
+
+    const userId = session?.id ? Number(session.id) : new Date().getTime();
     
     const order = await prisma.order.create({
       data: {
@@ -58,7 +61,7 @@ export async function createOrder(data: CheckoutFormValues) {
         status: OrderStatus.PENDING,
         items: JSON.stringify(cart.items),
         token,
-        userId: 1,
+        userId,
       },
     });
 
