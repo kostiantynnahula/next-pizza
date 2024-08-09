@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['media.dodostatic.net', 'cdn.dodostatic.net', 'images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      }
+    ],
   }
 };
 

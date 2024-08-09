@@ -13,7 +13,7 @@ type Props = {
 };
 
 const VAT = 15;
-const DELIVERY_PRICE = 250;
+const DELIVERY_PRICE = 5;
 
 export const CheckoutSideBar: React.FC<Props> = ({
   loading,

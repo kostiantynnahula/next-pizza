@@ -2,17 +2,46 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, configure `.env` file:
+```bash
+cp .env.example .env
+```
+
+### Prisma
+Run the prisma migration to have an actual database schema:
+```bash
+pnpm run prisma:migrate
+```
+
+Run the prisma seeder to fill the database default data
+```bash
+pnpm run prisma:seed
+```
+
+Run the prisma studio manage db throught UI
+```bash
+pnpm run prisma:studio
+```
+
+
+### Start the app
+Run one of the command to start the app
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
+
+### Create a production build
+Create a build
+```bash
+pnpm run build
+```
+
+Run product build
+```bash
+pnpm run start
+```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

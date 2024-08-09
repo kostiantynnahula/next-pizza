@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Search } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { useClickAway, useDebounce } from "react-use";
