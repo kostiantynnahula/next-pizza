@@ -111,7 +111,7 @@ export const ingredients = [
 
 export const products = [
   {
-    name: 'Ham and mushroom omelette',
+    name: 'Ham-Mush Omelette',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp',
     categoryId: 2,
@@ -141,7 +141,7 @@ export const products = [
     categoryId: 3,
   },
   {
-    name: 'Oven potatoes with gravy 🌱',
+    name: 'Oven Potatoes & Gravy 🌱',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EED646A9CD324C962C6BEA78124F19.webp',
     categoryId: 3,
@@ -171,7 +171,7 @@ export const products = [
     categoryId: 4,
   },
   {
-    name: 'Milkshake with Oreo biscuits',
+    name: 'Oreo Milkshake',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE796FA1F50F8F8111A399E4C1A1E3.webp',
     categoryId: 4,
@@ -183,31 +183,25 @@ export const products = [
     categoryId: 4,
   },
   {
-    name: 'Irish Cappuccino',
-    imageUrl:
-      'https://media.dodostatic.net/image/r:292x292/11EE7D61999EBDA59C10E216430A6093.webp',
-    categoryId: 5,
-  },
-  {
-    name: 'Coffee Caramel Cappuccino',
+    name: 'Caramel Cappuccino',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE7D61AED6B6D4BFDAD4E58D76CF56.webp',
     categoryId: 5,
   },
   {
-    name: 'Coffee Coconut Latte',
+    name: 'Coconut Latte',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE7D61B19FA07090EE88B0ED347F42.webp',
     categoryId: 5,
   },
   {
-    name: 'Caffe Americano',
+    name: 'Americano',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE7D61B044583596548A59078BBD33.webp',
     categoryId: 5,
   },
   {
-    name: 'Caffe Latte',
+    name: 'Latte',
     imageUrl:
       'https://media.dodostatic.net/image/r:292x292/11EE7D61B0C26A3F85D97A78FEEE00AD.webp',
     categoryId: 5,
